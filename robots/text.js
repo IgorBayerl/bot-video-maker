@@ -11,10 +11,12 @@ const nlu = new NaturalLanguageUnderstandingV1({
     url: 'https://gateway-lon.watsonplatform.net/natural-language-understanding/api/v1/analyze?'
 })
 
+const state = require('./state.js')
 
 
+async function robot() {
 
-async function robot(content) {
+    const content = state.load()
 
     console.log('> [text-robot] Starting...')
 
@@ -24,6 +26,8 @@ async function robot(content) {
     breakContentIntoSentences(content)
     limitMaximumSentences(content)
     await fetchKeywordsOfAllSentences(content)
+
+    state.save(content)
 
 
 
@@ -117,4 +121,3 @@ async function robot(content) {
 
 module.exports = robot
 
-// line.trim().length === 0 || 
