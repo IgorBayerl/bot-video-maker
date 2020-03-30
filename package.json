@@ -25,6 +25,6 @@
     "image-downloader": "^3.4.2",
     "readline-sync": "^1.4.10",
     "sbd": "^1.0.16",
-    "watson-developer-cloud": "^3.18.2"
+    "watson-developer-cloud": "^3.18.4"
   }
 }
