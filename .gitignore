@@ -104,3 +104,7 @@ dist
 .tern-port
 
 content.json
+
+algorithmia.json
+
+watson-nlu.json
