@@ -105,6 +105,8 @@ dist
 
 content.json
 
+#credentials
+credentials/
 algorithmia.json
 
 watson-nlu.json
