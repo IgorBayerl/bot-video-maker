@@ -1,9 +1,9 @@
 # BOT VIDEO
 
-##Função
+## Função
 - Fazer videos para o youtube a partir de um imput do usuario
 
-##BOTS
+## BOTS
 
 ### BOT Orquestrador
  -	Perguntar pelo termo de busca
