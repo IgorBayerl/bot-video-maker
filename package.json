@@ -1,0 +1,24 @@
+{
+  "name": "bot_video_maker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IgorBayerl/bot_video_maker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/IgorBayerl/bot_video_maker/issues"
+  },
+  "homepage": "https://github.com/IgorBayerl/bot_video_maker#readme",
+  "dependencies": {
+    "readline-sync": "^1.4.10"
+  }
+}
