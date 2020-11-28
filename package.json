@@ -20,6 +20,7 @@
   "homepage": "https://github.com/IgorBayerl/bot_video_maker#readme",
   "dependencies": {
     "algorithmia": "^0.3.10",
+    "ibm-watson": "^5.7.1",
     "readline-sync": "^1.4.10",
     "rss-parser": "^3.9.0",
     "sbd": "^1.0.18"

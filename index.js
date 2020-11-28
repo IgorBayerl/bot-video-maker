@@ -1,5 +1,6 @@
 const readline = require('readline-sync')
 const Parser = require('rss-parser');
+
 const robots = {
     text: require('./robots/text.js')
 }
@@ -7,7 +8,9 @@ const robots = {
 const TREND_URL = 'https://trends.google.com/trends/trendingsearches/daily/rss?geo=BR' 
 
 async function start() {
-    const content = {}
+    const content = {
+        maximumSentences: 7
+    }
 
     content.searchTerm = await askAndReturnSearchTerm()
     content.prefix = askAndReturnPrefix()
