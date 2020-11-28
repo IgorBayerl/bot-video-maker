@@ -2,7 +2,7 @@ const readline = require('readline-sync')
 const state = require('./state.js')
 const Parser = require('rss-parser');
 
-const TREND_URL = 'https://trends.google.com/trends/trendingsearches/daily/rss?geo=BR'
+const TREND_URL = 'https://trends.google.com/trends/trendingsearches/daily/rss?geo=US'
 
 async function robot() {
     const content = {
