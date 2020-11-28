@@ -9,14 +9,20 @@ const nlu = new NaturalLanguageUnderstandingV1({
     authenticator: new IamAuthenticator({ apikey: watsonApiKey }),
     version: '2018-04-05',
     serviceUrl: 'https://gateway.watsonplatform.net/natural-language-understanding/api/'
-  });
+});
 
-async function robot(content){
+const state = require('./state.js')
+
+async function robot(){
+    const content = state.load()
+
     await fetchContentFromWikipedia(content)
     sanitizeContent(content)
     breakContentIntoSentences(content)
     limitMaximumSentences(content)
     await fetchKeywordsOfAllSentences(content)
+
+    state.save(content)
 
     async function fetchContentFromWikipedia(content){
         const algorithmiaAuthenticated = algorithmia(algorithmiaApkKey);
