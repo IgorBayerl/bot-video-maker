@@ -18,8 +18,11 @@
     "url": "https://github.com/IgorBayerl/bot_video_maker/issues"
   },
   "homepage": "https://github.com/IgorBayerl/bot_video_maker#readme",
+  "bin": "index.js",
   "dependencies": {
     "algorithmia": "^0.3.10",
+    "express": "^4.17.1",
+    "gm": "^1.23.1",
     "googleapis": "^65.0.0",
     "ibm-watson": "^5.7.1",
     "image-downloader": "^4.0.1",
