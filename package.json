@@ -26,6 +26,7 @@
     "googleapis": "^65.0.0",
     "ibm-watson": "^5.7.1",
     "image-downloader": "^4.0.1",
+    "puppeteer": "^5.5.0",
     "readline-sync": "^1.4.10",
     "rss-parser": "^3.9.0",
     "sbd": "^1.0.18"
