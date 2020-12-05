@@ -40,7 +40,7 @@ async function robot(){
 
             let arrayContentSanitized = []
             for (let i = 0; i < topTenListContentOriginalArray.length; i++) {
-                const texto = topTenListContentOriginalArray[i].outerText
+                const texto = topTenListContentOriginalArray[i].outerText.replace(/(\r\n|\n|\r)/gm, " ")
                 
                 if( i != 0 ){
                     const title = topTenListTitlesOriginalArray[i-1].textContent
@@ -63,6 +63,7 @@ async function robot(){
 
         await browser.close()
     }
+
 
     function breakContentIntoSentences(content) {
 
@@ -107,7 +108,6 @@ async function robot(){
                     reject(error)
                     return
                 }
-                // console.log(response.result.keywords)
                 const keywords = response.result.keywords.map((keyword) => {
                     return keyword.text
                 })
