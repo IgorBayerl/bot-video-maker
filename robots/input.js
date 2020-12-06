@@ -6,7 +6,8 @@ const TREND_URL = 'https://trends.google.com/trends/trendingsearches/daily/rss?g
 
 async function robot() {
     const content = {
-        maximumSentences: 7
+        maximumSentences: 7,
+        imageQuantityForTopic: 7
     }
 
     content.searchTerm = await askAndReturnSearchTerm()

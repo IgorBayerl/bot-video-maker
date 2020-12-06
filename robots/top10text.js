@@ -36,14 +36,14 @@ async function robot(){
 
             const topTenListContentOriginalArray = document.querySelectorAll('#mvp-content-main p')
             const topTenListTitlesOriginalArray = document.querySelectorAll('#mvp-content-main h2 span')
-
+            const listTitle = document.querySelector('.mvp-post-title').textContent
 
             let arrayContentSanitized = []
             for (let i = 0; i < topTenListContentOriginalArray.length; i++) {
                 const texto = topTenListContentOriginalArray[i].outerText.replace(/(\r\n|\n|\r)/gm, " ")
                 
                 if( i != 0 ){
-                    const title = topTenListTitlesOriginalArray[i-1].textContent
+                    const title = topTenListTitlesOriginalArray[i-1].textContent.trim()
                     arrayContentSanitized.push({
                         title: title,
                         texto: texto,
@@ -57,9 +57,14 @@ async function robot(){
                     })
                 }
             }
-            return arrayContentSanitized
+            return {
+                title: listTitle,
+                arrayContentSanitized: arrayContentSanitized,
+            }
         });
-        content.topTenContentOriginal = topTenContent
+
+        content.articleListTitle = topTenContent.title
+        content.topTenContentOriginal = topTenContent.arrayContentSanitized
 
         await browser.close()
     }
@@ -72,7 +77,13 @@ async function robot(){
         topTenArray.forEach(item => {
             const sentences = sentenceBoundaryDetection.sentences(item.texto)
             sentences.forEach((sentence) => {
-                item.sentences.push(sentence)
+                // item.sentences.push(sentence)
+                item.sentences.push({
+                    text: sentence,
+                    keywords: [],
+                    images: []
+                })
+                //////
             })
         });
     
@@ -83,14 +94,25 @@ async function robot(){
 
     async function fetchKeywordsOfAllSentences(content) {
         console.log('> [text-robot] Starting to fetch keywords from Watson')
-    
-        for (const sentence of content.topTenContentOriginal) {
-            console.log(`> [text-robot] Sentence: "${sentence.texto}"`)
-        
-            sentence.keywords = await fetchWatsonAndReturnKeywords(sentence.texto)
-        
-            console.log(`> [text-robot] Keywords: ${sentence.keywords.join(', ')}\n`)
+        for (const topic of content.topTenContentOriginal) {
+            if (topic.title != 'introduction'){
+                for (const sentence of topic.sentences) {
+                    console.log(`> [text-robot] Sentence: "${sentence.text}"`)
+                    
+                    sentence.keywords = await fetchWatsonAndReturnKeywords(sentence.text)
+                
+                    console.log(`> [text-robot] Keywords: ${sentence.keywords.join(', ')}\n`)
+                }
+            }
         }
+    
+        // for (const topic of content.topTenContentOriginal) {
+        //     console.log(`> [text-robot] Sentence: "${topic.texto}"`)
+            
+        //     topic.keywords = await fetchWatsonAndReturnKeywords(topic.texto)
+        
+        //     console.log(`> [text-robot] Keywords: ${topic.keywords.join(', ')}\n`)
+        // }
             
 
     }
@@ -116,7 +138,6 @@ async function robot(){
             })
         })
     }
-
 
 }
 
