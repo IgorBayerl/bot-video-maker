@@ -3,9 +3,8 @@ const google = require('googleapis').google
 const customSearch = google.customsearch('v1')
 const state = require('./state');
 
-
 const googleSearchCredentials = require('../credentials/google-search.json');
-const { sentences } = require('sbd');
+
 
 
 async function robot(){
@@ -43,7 +42,6 @@ async function robot(){
                         console.log(error)
                     }
                     content.topTenContentOriginal[topicIndex].sentences[sentenceIndex].googleSearchQuery = query
-                    
                     
                 }
                 
