@@ -28,7 +28,7 @@ async function robot(){
     
 
     async function getTop10Titles(){
-        const browser = await puppeteer.launch({ headless: false });
+        const browser = await puppeteer.launch({ headless: true });
         const page = await browser.newPage();
         await page.goto(`https://top10mais.org/${tema}`);
 
@@ -47,6 +47,7 @@ async function robot(){
                     arrayContentSanitized.push({
                         title: title,
                         texto: texto,
+                        images: [],
                         sentences: []
                     })
                 }else{
@@ -80,8 +81,7 @@ async function robot(){
                 // item.sentences.push(sentence)
                 item.sentences.push({
                     text: sentence,
-                    keywords: [],
-                    images: []
+                    keywords: []
                 })
                 //////
             })

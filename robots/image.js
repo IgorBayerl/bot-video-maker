@@ -12,8 +12,8 @@ async function robot(){
 
     const content = state.load()
 
-    await fetchImagesOfAllSentences(content)
-    // await downloadAllImages(content)
+    // await fetchImagesOfAllSentences(content)
+    await downloadAllImages(content)
 
     state.save(content)
 
@@ -26,26 +26,32 @@ async function robot(){
             let query
             if (topicIndex !== 0) {
                 // for (let sentenceIndex = 0; sentenceIndex < content.topTenContentOriginal[topicIndex].sentences.length; sentenceIndex++) {
-                for (let sentenceIndex = 0; sentenceIndex < content.imageQuantityForTopic; sentenceIndex++) {    
-                    // const centence = content.topTenContentOriginal[topicIndex].sentences[sentenceIndex];
+                for (let sentenceIndex = 0; sentenceIndex < content.imageQuantityForTopic; sentenceIndex++) {   
+                    if(sentenceIndex < content.topTenContentOriginal[topicIndex].sentences.length ){
+                        if (sentenceIndex === 0) {
+                            query = `${content.topTenContentOriginal[topicIndex].title}`
+                        } else {
+                            query = `${content.topTenContentOriginal[topicIndex].title} ${content.topTenContentOriginal[topicIndex].sentences[sentenceIndex].keywords[0]}`
+                        }
 
-                    if (sentenceIndex === 0) {
+                    }else{
                         query = `${content.topTenContentOriginal[topicIndex].title}`
-                    } else {
-                        query = `${content.topTenContentOriginal[topicIndex].title} ${content.topTenContentOriginal[topicIndex].sentences[sentenceIndex].keywords[0]}`
-                        // query = `${content.topTenContentOriginal[topicIndex].title}`
                     }
+                    
                     console.log(`> [image-robot] Querying Google Images with: "${query}"`)
                     try {
-                        content.topTenContentOriginal[topicIndex].sentences[sentenceIndex].images = await fetchGoogleAndReturnImagesLinks(query)
+                        // content.topTenContentOriginal[topicIndex].sentences[sentenceIndex].images = await fetchGoogleAndReturnImagesLinks(query)
+                        content.topTenContentOriginal[topicIndex].images[sentenceIndex] = await fetchGoogleAndReturnImagesLinks(query)
+
                     } catch (error) {
                         console.log(error)
                     }
-                    content.topTenContentOriginal[topicIndex].sentences[sentenceIndex].googleSearchQuery = query
+                    // content.topTenContentOriginal[topicIndex].googleSearchQuery[sentenceIndex] = query
                     
                 }
                 
             }
+
             
 
             // if (topicIndex === 0) {
@@ -63,6 +69,7 @@ async function robot(){
     }
 
     async function fetchGoogleAndReturnImagesLinks(query) {
+        // const imagesUrl = `http://teste. ${query}`
         const response = await customSearch.cse.list({
             auth: googleSearchCredentials.apiKey,
             cx: googleSearchCredentials.searchEngineId,
@@ -83,7 +90,7 @@ async function robot(){
     async function downloadAllImages(content) {
         content.downloadedImages = []
     
-        for (let sentenceIndex = 0; sentenceIndex < content.topTenContentOriginal.length; sentenceIndex++) {
+        for (let sentenceIndex = 1; sentenceIndex < content.topTenContentOriginal.length; sentenceIndex++) {
             const images = content.topTenContentOriginal[sentenceIndex].images
         
             for (let imageIndex = 0; imageIndex < images.length; imageIndex++) {
