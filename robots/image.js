@@ -12,20 +12,17 @@ async function robot(){
 
     const content = state.load()
 
-    // await fetchImagesOfAllSentences(content)
+    await fetchImagesOfAllSentences(content)
     await downloadAllImages(content)
 
     state.save(content)
 
     async function fetchImagesOfAllSentences(content) {
-        // for (const iterator of content.topTenContentOriginal) {
-        //     console.log('oieee')
-        // }
+
         for (let topicIndex = 0; topicIndex < content.topTenContentOriginal.length; topicIndex++) {
             
             let query
             if (topicIndex !== 0) {
-                // for (let sentenceIndex = 0; sentenceIndex < content.topTenContentOriginal[topicIndex].sentences.length; sentenceIndex++) {
                 for (let sentenceIndex = 0; sentenceIndex < content.imageQuantityForTopic; sentenceIndex++) {   
                     if(sentenceIndex < content.topTenContentOriginal[topicIndex].sentences.length ){
                         if (sentenceIndex === 0) {
@@ -40,36 +37,21 @@ async function robot(){
                     
                     console.log(`> [image-robot] Querying Google Images with: "${query}"`)
                     try {
-                        // content.topTenContentOriginal[topicIndex].sentences[sentenceIndex].images = await fetchGoogleAndReturnImagesLinks(query)
+                        
                         content.topTenContentOriginal[topicIndex].images[sentenceIndex] = await fetchGoogleAndReturnImagesLinks(query)
 
                     } catch (error) {
                         console.log(error)
                     }
-                    // content.topTenContentOriginal[topicIndex].googleSearchQuery[sentenceIndex] = query
                     
                 }
                 
             }
 
-            
-
-            // if (topicIndex === 0) {
-            //     query = `${content.searchTerm}`
-            // } else {
-            //     // query = `${content.topTenContentOriginal[topicIndex].title} ${content.topTenContentOriginal[topicIndex].keywords[0]}`
-            //     query = `${content.topTenContentOriginal[topicIndex].title}`
-            // }
-
-            // console.log(`> [image-robot] Querying Google Images with: "${query}"`)
-
-            // content.topTenContentOriginal[topicIndex].images = await fetchGoogleAndReturnImagesLinks(query)
-            // content.topTenContentOriginal[topicIndex].googleSearchQuery = query
         }
     }
 
     async function fetchGoogleAndReturnImagesLinks(query) {
-        // const imagesUrl = `http://teste. ${query}`
         const response = await customSearch.cse.list({
             auth: googleSearchCredentials.apiKey,
             cx: googleSearchCredentials.searchEngineId,
@@ -86,29 +68,33 @@ async function robot(){
         return imagesUrl
     }  
     
-    
     async function downloadAllImages(content) {
         content.downloadedImages = []
     
-        for (let sentenceIndex = 1; sentenceIndex < content.topTenContentOriginal.length; sentenceIndex++) {
-            const images = content.topTenContentOriginal[sentenceIndex].images
+        for (let topicIndex = 1; topicIndex < content.topTenContentOriginal.length; topicIndex++) {
+            const images = content.topTenContentOriginal[topicIndex].images
         
-            for (let imageIndex = 0; imageIndex < images.length; imageIndex++) {
-                const imageUrl = images[imageIndex]
-        
-                try {
-                    if (content.downloadedImages.includes(imageUrl)) {
-                        throw new Error('Image already downloaded')
-                    }
-            
-                    await downloadAndSave(imageUrl, `${sentenceIndex}-original.png`)
-                    content.downloadedImages.push(imageUrl)
-                    console.log(`> [image-robot] [${sentenceIndex}][${imageIndex}] Image successfully downloaded: ${imageUrl}`)
-                    break
+            for (let imageArrayIndex = 0; imageArrayIndex < images.length; imageArrayIndex++) {
+                const imageURLArray = images[imageArrayIndex]
 
-                } catch(error) {
-                    console.log(`> [image-robot] [${sentenceIndex}][${imageIndex}] Error (${imageUrl}): ${error}`)
+                for (let imageIndex = 0; imageIndex < imageURLArray.length; imageIndex++) {
+                    const imageUrl = imageURLArray[imageIndex];
+                    try {
+                        if (content.downloadedImages.includes(imageUrl)) {
+                            throw new Error('Image already downloaded')
+                        }
+                
+                        await downloadAndSave(imageUrl, `${topicIndex}-${imageArrayIndex}-original.png`)
+                        content.downloadedImages.push(imageUrl)
+                        console.log(`> [image-robot] [${topicIndex}][${imageArrayIndex}][${imageIndex}] Image successfully downloaded: ${imageUrl}`)
+                        break
+
+                    } catch(error) {
+                        console.log(`> [image-robot] [${topicIndex}][${imageArrayIndex}][${imageIndex}] Error (${imageUrl}): ${error}`)
+                    }
                 }
+                // await downloadAndSave(imageUrl, `${topicIndex}-${imageArrayIndex}-original.png`)
+                
             }
         }
     }
