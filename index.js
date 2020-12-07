@@ -12,8 +12,8 @@ const robots = {
     // await robots.input()
     // await robots.text()
     // await robots.toptentext()
-    await robots.image()
-    // await robots.video()
+    // await robots.image()
+    await robots.video()
     // await robots.youtube()
   }
   

@@ -12,7 +12,7 @@ const nlu = new NaturalLanguageUnderstandingV1({
 });
 /// pegar os textos do top 10
 
-const tema = 'top-10-melhores-jogos-para-pc-de-todos-os-tempos/'
+// const tema = 'top-10-melhores-jogos-para-pc-de-todos-os-tempos/'
 
 async function robot(){
 
@@ -22,12 +22,12 @@ async function robot(){
     breakContentIntoSentences(content)
     await fetchKeywordsOfAllSentences(content)
 
-    
     state.save(content)
     
     
 
     async function getTop10Titles(){
+        const tema = content.topTenURL
         const browser = await puppeteer.launch({ headless: true });
         const page = await browser.newPage();
         await page.goto(`https://top10mais.org/${tema}`);
