@@ -58,7 +58,7 @@ async function robot(){
             q: query,
             searchType: 'image',
             num: 3,
-            imgSize: 'huge'
+            // imgSize: 'huge'
         })
     
         const imagesUrl = response.data.items.map((item) => {
@@ -102,7 +102,7 @@ async function robot(){
     async function downloadAndSave(url, fileName) {
         return imageDownloader.image({
             url: url,
-            dest: `./content/${fileName}`
+            dest: `./content/images-original/${fileName}`
         })
     }
     
