@@ -126,7 +126,6 @@ async function robot() {
     })
   }
 
-
   async function createSentenceImage(sentenceIndex, sentenceText) {
     return new Promise((resolve, reject) => {
       const outputFile = fromRoot(`./content/images-texts/${sentenceIndex}-sentence.png`)

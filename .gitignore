@@ -5,6 +5,12 @@
 
 # testing
 /coverage
+/credentials
+/credentials/algorithmia.json
+/credentials/google-search.json
+/credentials/google-youtube.json
+/credentials/watson-nlu.json
+/credentials/*
 
 # production
 /build
@@ -21,6 +27,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+
+
 content.json
 /content/**
 content/0-original.png
@@ -35,3 +43,12 @@ content/2-original.png
 content/4-original.png
 content/5-original.png
 content/6-original.png
+credentials/algorithmia.json
+credentials/algorithmia.json
+credentials/google-search.json
+credentials/google-youtube.json
+credentials/watson-nlu.json
+credentials/algorithmia.json
+credentials/google-search.json
+credentials/google-youtube.json
+credentials/watson-nlu.json
